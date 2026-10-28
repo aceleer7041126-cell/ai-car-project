@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPi5 AI 自走車遠端控制台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🤖 RPi5 AI 自走車 遠端控制台</h1>
+        <span class="badge">第六組：錢泓諺、李侑澂、詹侑霖</span>
+    </header>
+
+    <main class="grid">
+        <!-- 左上：視訊框 -->
+        <section class="panel video">
+            <h2>📷 即時視訊（車道線 + YOLO 辨識）</h2>
+            <img id="stream" src="/video_feed" alt="視訊串流">
+        </section>
+
+        <!-- 右上：車況狀態 -->
+        <section class="panel status">
+            <h2>📊 車況與視訊狀態</h2>
+            <ul>
+                <li>目前動作 <b id="st-action">stop</b></li>
+                <li>車道偏差 CTE <b id="st-cte">--</b> px</li>
+                <li>方向修正 <b id="st-dir">--</b></li>
+                <li>速差 u / L / R <b id="st-u">--</b></li>
+                <li>伺服水平 <b id="st-sh">center</b> / 垂直 <b id="st-sv">center</b></li>
+                <li>YOLO 辨識 <b id="st-yolo">--</b></li>
+                <li>物件統計 <b id="st-obj">--</b></li>
+                <li>模式 <b id="st-mock">--</b></li>
+            </ul>
+            <button id="btn-auto">▶ 啟動自動跟線</button>
+        </section>
+
+        <!-- 左下：方向搖桿 -->
+        <section class="panel joystick">
+            <h2>🕹️ 方向控制</h2>
+            <div class="pad">
+                <button class="dpad up"    data-act="forward">▲<br>前進</button>
+                <button class="dpad left"  data-act="left">◀<br>左轉</button>
+                <button class="dpad stop"  data-act="stop">■<br>停止</button>
+                <button class="dpad right" data-act="right">▶<br>右轉</button>
+                <button class="dpad down"  data-act="backward">▼<br>後退</button>
+            </div>
+        </section>
+
+        <!-- 右下：伺服馬達 -->
+        <section class="panel servo">
+            <h2>🎥 攝影機角度 (SERVO)</h2>
+            <div class="servo-pad">
+                <button data-servo="up">▲ 上</button>
+                <button data-servo="left">◀ 左</button>
+                <button data-servo="right">▶ 右</button>
+                <button data-servo="down">▼ 下</button>
+                <button data-servo="center" class="wide">◎ 置中</button>
+            </div>
+            <div class="speed-box">
+                <label>速度 <b id="spd-val">60</b>%</label>
+                <input type="range" id="speed" min="20" max="100" value="60" step="5">
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
